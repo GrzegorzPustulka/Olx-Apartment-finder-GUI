@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QHBoxLayout, \
     QDialog, QLabel, QListWidget, QMessageBox
 from PyQt6 import uic
-from PyQt6.QtGui import QPixmap
+from PyQt6.QtGui import QPixmap, QFont
 import sys
 
 
@@ -12,6 +12,17 @@ def exit_application() -> None:
 class Window(QWidget):
     def __init__(self):
         super().__init__()
+        self.searchLabel = None
+        self.minPriceLabel = None
+        self.maxPriceLabel = None
+        self.kindLayout = None
+        self.priceLayout = None
+        self.descriptionLabel = None
+        self.textDistrictsLabel = None
+        self.mapBtn = None
+        self.exitBtn = None
+        self.searchBtn = None
+        self.apartmentRbtn = None
         self.minPriceInput = None
         self.maxPriceInput = None
         self.districtsList = None
@@ -56,6 +67,34 @@ class Window(QWidget):
         except ValueError:
             max_price = None
             QMessageBox.information(self, "Error", "You entered the wrong maximum price.\nIt must be a integer")
+
+        link = ""
+        if self.apartmentRbtn.isChecked():
+            link += "https://www.olx.pl/d/nieruchomosci/mieszkania/krakow/?page=1"
+        elif self.roomRbtn.isChecked():
+            link += "https://www.olx.pl/d/nieruchomosci/stancje-pokoje/krakow/?page=1"
+        else:
+            QMessageBox.information(self, "Error", "You have not chosen whether you want to\n"
+                                                   "look for a room or an apartment")
+
+        if len(self.selected_districts) > 0 and isinstance(min_price, int) and \
+                isinstance(min_price, int) and len(link) > 0:
+            self.searchBtn.deleteLater()
+            self.districtsList.deleteLater()
+            self.descriptionLabel.deleteLater()
+            self.priceLayout.deleteLater()
+            self.maxPriceInput.deleteLater()
+            self.maxPriceLabel.deleteLater()
+            self.minPriceInput.deleteLater()
+            self.minPriceLabel.deleteLater()
+            self.searchLabel.deleteLater()
+            self.kindLayout.deleteLater()
+            self.textDistrictsLabel.setText("Your filters: ")
+            # zmienic nazwe jeszcze
+            self.textDistrictsLabel.setFixedSize(400, 50)
+            self.textDistrictsLabel.setFont(QFont("Arial", 40))
+            self.textDistrictsLabel.move(200, 30)
+
 
 
 if __name__ == "__main__":
