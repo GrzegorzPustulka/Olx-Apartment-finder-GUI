@@ -311,7 +311,7 @@ administrative rent, utilities, etc.
        </font>
       </property>
       <property name="text">
-       <string>Max price:   </string>
+       <string>Min price:  </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

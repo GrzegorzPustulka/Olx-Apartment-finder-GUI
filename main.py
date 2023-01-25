@@ -3,10 +3,38 @@ from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QHB
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QFont
 import sys
+import requests
+from bs4 import BeautifulSoup
+import re
+import lxml
 
 
 def exit_application() -> None:
     sys.exit(0)
+
+
+def scraping(max, min, link, our_districts):
+    req = requests.get("https://www.olx.pl/d/nieruchomosci/mieszkania/krakow/")
+    soup = BeautifulSoup(req.text, 'lxml')
+
+    # count pages
+    count_pages = int(soup.select('li[data-testid="pagination-list-item"]')[3].text)
+
+    # ad districts from olx 0-51
+    olx_districts = soup.find_all("p", attrs={"data-testid": "location-date"})
+
+    # ad price from olx 0-51
+    olx_buffer_prices = soup.find_all("p", attrs={"data-testid": "ad-price"})
+
+    # change prices from ad to friendly number
+    buffer = []
+    for i in olx_buffer_prices:
+        buffer.append(i.text)
+    text_prices = ''
+    for price in buffer:
+        text_prices += price
+    text_prices = text_prices.replace(' ', '').replace(',', '.')
+    olx_prices = [float(x) for x in re.findall(r'\d*\.\d+|\d+', text_prices)]
 
 
 class Window(QWidget):
@@ -95,6 +123,7 @@ class Window(QWidget):
             self.textDistrictsLabel.setFont(QFont("Arial", 40))
             self.textDistrictsLabel.move(200, 30)
 
+            scraping(max_price, min_price, link, self.selected_districts)
 
 
 if __name__ == "__main__":
