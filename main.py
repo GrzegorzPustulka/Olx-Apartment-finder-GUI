@@ -6,8 +6,17 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 import re
-
+import pandas as pd
+from dataclasses import dataclass
 import lxml
+import openpyxl
+
+@dataclass
+class Ads:
+    link: str
+    price: float
+    rent: float
+    total: float
 
 
 def exit_application() -> None:
@@ -24,7 +33,7 @@ def scraping(max, min, link, our_districts):
     olx_ad = []
     for name in ad:
         if not "otodom" in name['href']:
-            olx_ad.append("https://www.olx.pl"+name['href'])
+            olx_ad.append("https://www.olx.pl" + name['href'])
         else:
             olx_ad.append(name['href'])
 
@@ -44,6 +53,7 @@ def scraping(max, min, link, our_districts):
     text_prices = text_prices.replace(' ', '').replace(',', '.')
     olx_prices = [float(x) for x in re.findall(r'\d*\.\d+|\d+', text_prices)]
 
+    ads=[]
     olx_rent = 0
     for i, district in enumerate(olx_districts):
         for name in our_districts:
@@ -55,20 +65,19 @@ def scraping(max, min, link, our_districts):
                     if "olx.pl" in olx_ad[i]:
                         price_rent_buffer = soup.select('li.css-1r0si1e')
                         for k in price_rent_buffer:
-                            if "Czynsz" in price_rent_buffer:
+                            if "Czynsz" in k.text:
                                 text_prices = k.text.replace(' ', '').replace(',', '.')
                                 olx_rent = (int(re.findall(r'\d+', text_prices)[0]))
+
                     else:
                         olx_rent = 0
                     if max >= olx_prices[i] + olx_rent >= min:
-                        print(olx_ad[i])
-
+                        ad = Ads(olx_ad[i], olx_prices[i], olx_rent, olx_prices[i]+olx_rent)
+                        ads.append(ad)
                     break
-
-
-    # check rent price with max,min
-    # output in Dataframe/class
-    # write to csv(?)
+    df = pd.DataFrame(ads)
+    print(df)
+    df.to_excel('OlxDane.xlsx')
 
 
 
