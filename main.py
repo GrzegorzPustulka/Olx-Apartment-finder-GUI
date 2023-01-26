@@ -44,7 +44,7 @@ class Window(QWidget):
         label.setPixmap(pixmap)
         self.image_map.exec()
 
-    def search_apartments(self):
+    def search_apartments(self) -> None:
         self.selected_districts = [item.text() for item in self.districtsList.selectedItems()]
 
         if len(self.selected_districts) == 0:
@@ -71,31 +71,16 @@ class Window(QWidget):
 
         link = ""
         if self.apartmentRbtn.isChecked():
-            link += "https://www.olx.pl/d/nieruchomosci/mieszkania/krakow/?page=1"
+            link += "https://www.olx.pl/d/nieruchomosci/mieszkania/krakow/"
         elif self.roomRbtn.isChecked():
-            link += "https://www.olx.pl/d/nieruchomosci/stancje-pokoje/krakow/?page=1"
+            link += "https://www.olx.pl/d/nieruchomosci/stancje-pokoje/krakow/"
         else:
             QMessageBox.information(self, "Error", "You have not chosen whether you want to\n"
                                                    "look for a room or an apartment")
 
         if len(self.selected_districts) > 0 and isinstance(min_price, int) and \
                 isinstance(min_price, int) and len(link) > 0:
-            self.searchBtn.deleteLater()
-            self.districtsList.deleteLater()
-            self.descriptionLabel.deleteLater()
-            self.priceLayout.deleteLater()
-            self.maxPriceInput.deleteLater()
-            self.maxPriceLabel.deleteLater()
-            self.minPriceInput.deleteLater()
-            self.minPriceLabel.deleteLater()
-            self.searchLabel.deleteLater()
-            self.kindLayout.deleteLater()
-            self.textDistrictsLabel.setText("Your filters: ")
-            # change name
-            self.textDistrictsLabel.setFixedSize(400, 50)
-            self.textDistrictsLabel.setFont(QFont("Arial", 40))
-            self.textDistrictsLabel.move(200, 30)
-
+            self.destroy()
             scraping_olx(max_price, min_price, link, self.selected_districts)
 
 
