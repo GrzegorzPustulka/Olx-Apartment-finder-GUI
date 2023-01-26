@@ -1,11 +1,12 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QHBoxLayout, \
-    QDialog, QLabel, QListWidget, QMessageBox
+from PyQt6.QtWidgets import QApplication, QWidget, \
+    QDialog, QLabel, QMessageBox
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QFont
 import sys
 import requests
 from bs4 import BeautifulSoup
 import re
+
 import lxml
 
 
@@ -16,9 +17,16 @@ def exit_application() -> None:
 def scraping(max, min, link, our_districts):
     req = requests.get("https://www.olx.pl/d/nieruchomosci/mieszkania/krakow/")
     soup = BeautifulSoup(req.text, 'lxml')
-
     # count pages
     count_pages = int(soup.select('li[data-testid="pagination-list-item"]')[3].text)
+
+    ad = soup.select("a.css-rc5s2u")
+    olx_ad = []
+    for name in ad:
+        if not "otodom" in name['href']:
+            olx_ad.append("https://www.olx.pl"+name['href'])
+        else:
+            olx_ad.append(name['href'])
 
     # ad districts from olx 0-51
     olx_districts = soup.find_all("p", attrs={"data-testid": "location-date"})
@@ -35,6 +43,33 @@ def scraping(max, min, link, our_districts):
         text_prices += price
     text_prices = text_prices.replace(' ', '').replace(',', '.')
     olx_prices = [float(x) for x in re.findall(r'\d*\.\d+|\d+', text_prices)]
+
+    olx_rent = 0
+    for i, district in enumerate(olx_districts):
+        for name in our_districts:
+            if name in district.text:
+                if max >= olx_prices[i] >= min:
+                    req = requests.get(olx_ad[i])
+                    soup = BeautifulSoup(req.text, 'lxml')
+
+                    if "olx.pl" in olx_ad[i]:
+                        price_rent_buffer = soup.select('li.css-1r0si1e')
+                        for k in price_rent_buffer:
+                            if "Czynsz" in price_rent_buffer:
+                                text_prices = k.text.replace(' ', '').replace(',', '.')
+                                olx_rent = (int(re.findall(r'\d+', text_prices)[0]))
+                    else:
+                        olx_rent = 0
+                    if max >= olx_prices[i] + olx_rent >= min:
+                        print(olx_ad[i])
+
+                    break
+
+
+    # check rent price with max,min
+    # output in Dataframe/class
+    # write to csv(?)
+
 
 
 class Window(QWidget):
@@ -79,8 +114,8 @@ class Window(QWidget):
 
         for district in self.selected_districts:
             if district == "All":
-                self.selected_districts = ["Bieńczyce", "Bieżanów", "Bieżanów-Prokocim", "Bronowice", "Czyżyny",
-                                           "Dębniki", "Grzegórzki", "Krowodza", "Łagiewniki-Borek Fałęcki",
+                self.selected_districts = ["Bieńczyce", "Bieżanów-Prokocim", "Bronowice", "Czyżyny",
+                                           "Dębniki", "Grzegórzki", "Krowodrza", "Łagiewniki-Borek Fałęcki",
                                            "Mistrzejowice", "Nowa Huta", "Podgórze", "Podgórze Duchackie",
                                            "Prądnik Biały", "Prądnik Czerwony", "Stare Miasto", "Swoszowice",
                                            "Wzgórza Krzesławickie", "Zwierzyniec"]
