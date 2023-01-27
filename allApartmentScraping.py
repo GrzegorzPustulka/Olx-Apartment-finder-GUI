@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -14,8 +13,7 @@ class Ads:
     total: float
 
 
-def scraping_olx(max_price, min_price, link, our_districts):
-
+def all_apartments_scraping(max_price, min_price, link, our_districts):
     ads = []
     req = requests.get(link)
     soup = BeautifulSoup(req.text, 'lxml')
@@ -23,7 +21,6 @@ def scraping_olx(max_price, min_price, link, our_districts):
     count_pages = int(soup.select('li[data-testid="pagination-list-item"]')[3].text)
 
     for page_number in range(1, count_pages):
-        print("jestem na " + str(page_number))
         ad = soup.select("a.css-rc5s2u")
         olx_ad = []
         for name in ad:
@@ -74,4 +71,4 @@ def scraping_olx(max_price, min_price, link, our_districts):
 
     df = pd.DataFrame(ads)
     print(df)
-    df.to_excel('OlxDane.xlsx')
+    df.to_excel('AllApartments.xlsx')

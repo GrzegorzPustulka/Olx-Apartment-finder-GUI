@@ -3,7 +3,6 @@ from PyQt6.QtWidgets import QApplication, QWidget, \
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QFont
 import sys
-from scraping import scraping_olx
 
 
 def exit_application() -> None:
@@ -13,6 +12,8 @@ def exit_application() -> None:
 class Window(QWidget):
     def __init__(self):
         super().__init__()
+        self.allOffersRbtn = None
+        self.newOffersRbtn = None
         self.roomRbtn = None
         self.searchLabel = None
         self.minPriceLabel = None
@@ -30,7 +31,7 @@ class Window(QWidget):
         self.districtsList = None
         self.selected_districts = None
         self.image_map = None
-        uic.loadUi("MainWindow.ui", self)
+        uic.loadUi("mainWindow.ui", self)
         self.mapBtn.clicked.connect(self.open_map_image)
         self.exitBtn.clicked.connect(exit_application)
         self.searchBtn.clicked.connect(self.search_apartments)
@@ -80,8 +81,25 @@ class Window(QWidget):
 
         if len(self.selected_districts) > 0 and isinstance(min_price, int) and \
                 isinstance(min_price, int) and len(link) > 0:
-            self.destroy()
-            scraping_olx(max_price, min_price, link, self.selected_districts)
+            if self.allOffersRbtn.isChecked() and self.apartmentRbtn.isChecked():
+                from allApartmentScraping import all_apartments_scraping
+                all_apartments_scraping(max_price, min_price, link, self.selected_districts)
+            elif self.allOffersRbtn.isChecked() and self.roomRbtn.isChecked():
+                pass
+                # all offer of apartments
+                # import
+                # function
+            elif self.newOffersRbtn.isChecked() and self.apartmentRbtn.isChecked():
+                from newApartmentScraping import new_apartments_scraping
+                new_apartments_scraping(max_price, min_price, link, self.selected_districts)
+            elif self.newOffersRbtn.isChecked() and self.roomRbtn.isChecked():
+                pass
+                # new offer of rooms
+                # import
+                # function
+            else:
+                QMessageBox.information(self, "Error", "You have not chosen whether you want to\n"
+                                                       "look for new or all ad")
 
 
 if __name__ == "__main__":

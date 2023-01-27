@@ -204,21 +204,21 @@ background-color: #1e81b0;
    <property name="geometry">
     <rect>
      <x>460</x>
-     <y>190</y>
-     <width>271</width>
-     <height>131</height>
+     <y>120</y>
+     <width>201</width>
+     <height>111</height>
     </rect>
    </property>
    <property name="title">
     <string/>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>149</width>
-      <height>88</height>
+      <width>181</width>
+      <height>109</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -252,8 +252,8 @@ background-color: #1e81b0;
   <widget class="QLabel" name="searchLabel">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>230</y>
+     <x>330</x>
+     <y>150</y>
      <width>121</width>
      <height>42</height>
     </rect>
@@ -271,32 +271,31 @@ background-color: #1e81b0;
   <widget class="QLabel" name="descriptionLabel">
    <property name="geometry">
     <rect>
-     <x>340</x>
-     <y>20</y>
-     <width>451</width>
-     <height>151</height>
+     <x>300</x>
+     <y>-20</y>
+     <width>471</width>
+     <height>161</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>17</pointsize>
+     <pointsize>13</pointsize>
      <italic>true</italic>
      <bold>true</bold>
     </font>
    </property>
    <property name="text">
-    <string>Dishonest owners only give the price
-of the rent, and the rest of the costs
-only after entering the ad. Such as
-administrative rent, utilities, etc.
-            This is the solution</string>
+    <string>Dishonest owners only give the price of the
+rent, and the rest of the costs only after
+entering the ad. Such as administrative rent,
+ utilities, etc. This is the solution</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>330</x>
-     <y>340</y>
+     <y>350</y>
      <width>401</width>
      <height>116</height>
     </rect>
@@ -381,13 +380,13 @@ administrative rent, utilities, etc.
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>10</x>
      <y>530</y>
-     <width>741</width>
-     <height>46</height>
+     <width>781</width>
+     <height>55</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="foorLayout">
@@ -419,23 +418,29 @@ administrative rent, utilities, etc.
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="informationBtn">
+     <widget class="QPushButton" name="infoBtn">
       <property name="enabled">
        <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
       </property>
       <property name="font">
        <font>
         <pointsize>20</pointsize>
        </font>
       </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
       <property name="text">
-       <string>INFORMATION</string>
+       <string>INFO</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>16</width>
+        <height>16</height>
+       </size>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -461,6 +466,74 @@ administrative rent, utilities, etc.
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="searchLabel_2">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>260</y>
+     <width>121</width>
+     <height>42</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>23</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Search: </string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="kindLayout_2">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>230</y>
+     <width>211</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+   <widget class="QWidget" name="layoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>181</width>
+      <height>109</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QRadioButton" name="allOffersRbtn">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>all offers</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="newOffersRbtn">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>new offers</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources/>
