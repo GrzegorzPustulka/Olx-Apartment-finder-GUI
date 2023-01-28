@@ -2,22 +2,14 @@ from dataclasses import dataclass
 import requests
 from bs4 import BeautifulSoup
 import re
-import pandas as pd
+from emailSender import email_sender
 import time
-
-
-@dataclass
-class Ads:
-    link: str
-    price: float
-    rent: float
-    total: float
-    district: str
 
 
 def new_apartments_scraping(max_price, min_price, link, our_districts):
     previous_ad = ''
-    offer_list = []
+    email = input('Enter email: ')
+    password = input('Enter password: ')
     while True:
         req = requests.get(link)
         soup = BeautifulSoup(req.text, 'lxml')
@@ -51,11 +43,8 @@ def new_apartments_scraping(max_price, min_price, link, our_districts):
 
             if max_price >= price + rent >= min_price and ad != previous_ad:
                 previous_ad = ad
-                offer = Ads(ad, price, rent, price + rent, district)
-                offer_list.append(offer)
-                df = pd.DataFrame(offer_list)
-                print(df)
-                #df.to_excel('AllApartments.xlsx')
+                print(ad)
+                email_sender(ad, email, password)
 
         time.sleep(30)
 
