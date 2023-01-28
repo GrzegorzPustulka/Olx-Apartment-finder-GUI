@@ -90,6 +90,7 @@ class Window(QWidget):
                 # import
                 # function
             elif self.newOffersRbtn.isChecked() and self.apartmentRbtn.isChecked():
+                window.close()
                 from newApartmentScraping import new_apartments_scraping
                 new_apartments_scraping(max_price, min_price, link, self.selected_districts)
             elif self.newOffersRbtn.isChecked() and self.roomRbtn.isChecked():
