@@ -82,19 +82,18 @@ class Window(QWidget):
         if len(self.selected_districts) > 0 and isinstance(min_price, int) and \
                 isinstance(min_price, int) and len(link) > 0:
             if self.allOffersRbtn.isChecked() and self.apartmentRbtn.isChecked():
-                from allApartmentScraping import all_apartments_scraping
-                all_apartments_scraping(max_price, min_price, link, self.selected_districts)
+                window.close()
+                from allApartmentScraping import run_all_apartments
+                run_all_apartments(max_price, min_price, link, self.selected_districts)
             elif self.allOffersRbtn.isChecked() and self.roomRbtn.isChecked():
-                pass
-                # all offer of apartments
-                # import
-                # function
+                window.close()
+                from allRoomsScraping import run_all_rooms
+                run_all_rooms(max_price, min_price, link, self.selected_districts)
             elif self.newOffersRbtn.isChecked() and self.apartmentRbtn.isChecked():
                 window.close()
                 from newApartmentScraping import new_apartments_scraping
                 new_apartments_scraping(max_price, min_price, link, self.selected_districts)
             elif self.newOffersRbtn.isChecked() and self.roomRbtn.isChecked():
-                pass
                 window.close()
                 from newRoomScraping import new_room_scraping
                 new_room_scraping(max_price, min_price, link, self.selected_districts)

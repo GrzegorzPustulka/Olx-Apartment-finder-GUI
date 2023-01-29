@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from emailSender import email_sender
+import pandas as pd
 import time
 
 
@@ -10,13 +11,15 @@ import time
 class Ads:
     link: str
     price: float
+    bills: float
     probably: float
 
 
 def new_room_scraping(max_price, min_price, link, our_districts):
     previous_ad = ''
-    # email = input('Enter email: ')
-    # password = input('Enter password: ')
+    ads = []
+    email = input('Enter email: ')
+    password = input('Enter password: ')
     while True:
         req = requests.get(link)
         soup = BeautifulSoup(req.text, 'lxml')
@@ -34,7 +37,6 @@ def new_room_scraping(max_price, min_price, link, our_districts):
         # price
         price = soup.find_all("p", attrs={"data-testid": "ad-price"})[3].text.replace(' ', '').replace(',', '.').replace(',', '.').replace('zł', '')
         price = float(price)
-        rent = 0
 
         additional_fees = 0.0
         if district in our_districts and max_price >= price >= min_price:
@@ -48,18 +50,20 @@ def new_room_scraping(max_price, min_price, link, our_districts):
                 for i in range(len(bills)):
                     bills[i] = ''.join(x for x in bills[i] if x.isdigit())
                 bills[:] = list(set(bills))
-                bills[:] = [float(x) for x in list(set(bills)) if float(x) < price]
+                bills[:] = [float(x) for x in list(set(bills)) if float(x) < 600]
                 for bill in bills:
                     additional_fees += bill
             else:
                 additional_fees = 0.0
 
-            if max_price >= price + rent >= min_price and ad != previous_ad:
+            if max_price >= price >= min_price and ad != previous_ad:
                 previous_ad = ad
-                print(ad)
-                print(price)
-                print(additional_fees)
-                # email_sender(ad, email, password)
+                offer = Ads(ad, price, additional_fees, price + additional_fees)
+                ads.append(offer)
+                df = pd.DataFrame(ads)
+                print(df)
+                df.to_excel('newRooms.xlsx')
+                email_sender(ad, email, password)
 
         time.sleep(30)
 

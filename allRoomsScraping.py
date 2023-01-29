@@ -1,23 +1,24 @@
 from dataclasses import dataclass
 import requests
 from bs4 import BeautifulSoup
+import threading
 import re
 import pandas as pd
-import threading
 
 
 @dataclass
 class Ads:
     link: str
     price: float
-    rent: float
-    total: float
+    bills: float
+    probably: float
 
 
 ads = []
 
 
-def all_apartments_scraping(max_price, min_price, link, our_districts):
+def all_rooms_scraping(max_price, min_price, link, our_districts):
+
     thread_ads = []
     req = requests.get(link)
     soup = BeautifulSoup(req.text, 'lxml')
@@ -44,8 +45,7 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
         text_prices += price
     text_prices = text_prices.replace(' ', '').replace(',', '.')
     olx_prices = [float(x) for x in re.findall(r'\d*\.\d+|\d+', text_prices)]
-
-    olx_rent = 0
+    additional_fees = 0.0
     for i, district in enumerate(olx_districts):
         for name in our_districts:
             if name in district.text:
@@ -54,20 +54,26 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
                     soup = BeautifulSoup(req.text, 'lxml')
 
                     if "olx.pl" in olx_ad[i]:
-                        price_rent_buffer = soup.select('li.css-1r0si1e')
-                        for tag in price_rent_buffer:
-                            if "Czynsz" in tag.text:
-                                text_prices = tag.text.replace(' ', '').replace(',', '.')
-                                olx_rent = (int(re.findall(r'\d+', text_prices)[0]))
+                        description = soup.select('.css-bgzo2k.er34gjf0')[0].text
+                        mo = r"(\d+[-,\s-]*\d*zł|\d+złoty|\d+zł|\d+[-,\s-]*\d* PLN|\d+pln|\d+[-,\s-]*\d* zl)"
+                        bills = re.findall(mo, description)
+                        for j in range(len(bills)):
+                            bills[j] = ''.join(x for x in bills[j] if x.isdigit())
+                        bills[:] = list(set(bills))
+                        bills[:] = [float(x) for x in list(set(bills)) if float(x) < 600]
+                        for bill in bills:
+                            additional_fees += bill
                     else:
-                        olx_rent = 0
-                    if max_price >= olx_prices[i] + olx_rent >= min_price:
-                        ad = Ads(olx_ad[i], olx_prices[i], olx_rent, olx_prices[i] + olx_rent)
+                        additional_fees = 0.0
+
+                    if max_price >= olx_prices[i] >= min_price:
+                        ad = Ads(olx_ad[i], olx_prices[i], additional_fees, olx_prices[i] + additional_fees)
                         thread_ads.append(ad)
+                    additional_fees = 0.0
     ads.append(thread_ads)
 
 
-def run_all_apartments(max_price, min_price, link, our_districts):
+def run_all_rooms(max_price, min_price, link, our_districts):
     threads = []
     req = requests.get(link)
     soup = BeautifulSoup(req.text, 'lxml')
@@ -75,12 +81,12 @@ def run_all_apartments(max_price, min_price, link, our_districts):
 
     for i in range(count_pages):
         if i == 0:
-            t = threading.Thread(target=all_apartments_scraping, args=(max_price, min_price, link, our_districts))
+            t = threading.Thread(target=all_rooms_scraping, args=(max_price, min_price, link, our_districts))
             threads.append(t)
             t.start()
         else:
             link = link + "?page=" + str(i + 1)
-            t = threading.Thread(target=all_apartments_scraping, args=(max_price, min_price, link, our_districts))
+            t = threading.Thread(target=all_rooms_scraping, args=(max_price, min_price, link, our_districts))
             threads.append(t)
             t.start()
 
@@ -93,4 +99,4 @@ def run_all_apartments(max_price, min_price, link, our_districts):
 
     df = pd.DataFrame(final_results)
     print(df)
-    df.to_excel('AllApartment.xlsx')
+    df.to_excel('AllRoom.xlsx')
