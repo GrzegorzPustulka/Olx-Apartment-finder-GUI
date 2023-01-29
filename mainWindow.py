@@ -95,9 +95,9 @@ class Window(QWidget):
                 new_apartments_scraping(max_price, min_price, link, self.selected_districts)
             elif self.newOffersRbtn.isChecked() and self.roomRbtn.isChecked():
                 pass
-                # new offer of rooms
-                # import
-                # function
+                window.close()
+                from newRoomScraping import new_room_scraping
+                new_room_scraping(max_price, min_price, link, self.selected_districts)
             else:
                 QMessageBox.information(self, "Error", "You have not chosen whether you want to\n"
                                                        "look for new or all ad")

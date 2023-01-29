@@ -55,9 +55,9 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
 
                         if "olx.pl" in olx_ad[i]:
                             price_rent_buffer = soup.select('li.css-1r0si1e')
-                            for k in price_rent_buffer:
-                                if "Czynsz" in k.text:
-                                    text_prices = k.text.replace(' ', '').replace(',', '.')
+                            for tag in price_rent_buffer:
+                                if "Czynsz" in tag.text:
+                                    text_prices = tag.text.replace(' ', '').replace(',', '.')
                                     olx_rent = (int(re.findall(r'\d+', text_prices)[0]))
                         else:
                             olx_rent = 0
