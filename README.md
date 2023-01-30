@@ -1,9 +1,9 @@
 # Olx Apartment Finder
 
 I wrote the program while I was looking for a flat for myself in Krakow. 
-I noticed that most owners cheat potential customers on olx.pl
+I noticed that most owners cheat potential customers on olx.pl.
 Owners only give the price od the rent, and the rest of the costs only after entering the ad. Such as administrative rent, utilities, etc.
-I added a GUI and some useful features that I will describe later to make it easier for my friends to use this program
+I added a GUI to make it easier for my friends to use this program and some useful features that I will describe later.
 
 ## Usage examples
 
