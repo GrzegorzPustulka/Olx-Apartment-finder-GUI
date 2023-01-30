@@ -160,29 +160,6 @@ background-color: #1e81b0;
     </property>
    </item>
   </widget>
-  <widget class="QLabel" name="textDistrictsLabel">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>20</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>16</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Select districts</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
   <widget class="QPushButton" name="mapBtn">
    <property name="geometry">
     <rect>
@@ -263,7 +240,7 @@ background-color: #1e81b0;
    </property>
    <property name="font">
     <font>
-     <pointsize>23</pointsize>
+     <pointsize>30</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -278,15 +255,17 @@ background-color: #1e81b0;
      <x>300</x>
      <y>-20</y>
      <width>471</width>
-     <height>161</height>
+     <height>151</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>13</pointsize>
+     <family>Arial</family>
+     <pointsize>17</pointsize>
      <weight>75</weight>
-     <italic>true</italic>
+     <italic>false</italic>
      <bold>true</bold>
+     <kerning>false</kerning>
     </font>
    </property>
    <property name="text">
@@ -310,13 +289,13 @@ entering the ad. Such as administrative rent,
      <widget class="QLabel" name="minPriceLabel">
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
+        <pointsize>22</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
       <property name="text">
-       <string>Min price:  </string>
+       <string>Min price:   </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -351,7 +330,7 @@ entering the ad. Such as administrative rent,
      <widget class="QLabel" name="maxPriceLabel">
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
+        <pointsize>22</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -404,6 +383,7 @@ entering the ad. Such as administrative rent,
       </property>
       <property name="font">
        <font>
+        <family>MS Shell Dlg 2</family>
         <pointsize>20</pointsize>
        </font>
       </property>
@@ -485,7 +465,7 @@ entering the ad. Such as administrative rent,
    </property>
    <property name="font">
     <font>
-     <pointsize>23</pointsize>
+     <pointsize>30</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -542,6 +522,29 @@ entering the ad. Such as administrative rent,
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QLabel" name="textDistrictsLabel">
+   <property name="geometry">
+    <rect>
+     <x>54</x>
+     <y>30</y>
+     <width>181</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>19</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>SELECT DISTRICTS</string>
+   </property>
   </widget>
  </widget>
  <resources/>
