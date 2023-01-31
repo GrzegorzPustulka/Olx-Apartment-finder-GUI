@@ -42,7 +42,6 @@ background-color: #1e81b0;
    <property name="font">
     <font>
      <pointsize>11</pointsize>
-     <weight>50</weight>
      <bold>false</bold>
     </font>
    </property>
@@ -172,7 +171,6 @@ background-color: #1e81b0;
    <property name="font">
     <font>
      <pointsize>16</pointsize>
-     <weight>50</weight>
      <bold>false</bold>
     </font>
    </property>
@@ -240,8 +238,7 @@ background-color: #1e81b0;
    </property>
    <property name="font">
     <font>
-     <pointsize>30</pointsize>
-     <weight>75</weight>
+     <pointsize>25</pointsize>
      <bold>true</bold>
     </font>
    </property>
@@ -254,15 +251,14 @@ background-color: #1e81b0;
     <rect>
      <x>300</x>
      <y>-20</y>
-     <width>471</width>
+     <width>461</width>
      <height>151</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Arial</family>
-     <pointsize>17</pointsize>
-     <weight>75</weight>
+     <pointsize>15</pointsize>
      <italic>false</italic>
      <bold>true</bold>
      <kerning>false</kerning>
@@ -290,7 +286,6 @@ entering the ad. Such as administrative rent,
       <property name="font">
        <font>
         <pointsize>22</pointsize>
-        <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
@@ -331,7 +326,6 @@ entering the ad. Such as administrative rent,
       <property name="font">
        <font>
         <pointsize>22</pointsize>
-        <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
@@ -383,7 +377,7 @@ entering the ad. Such as administrative rent,
       </property>
       <property name="font">
        <font>
-        <family>MS Shell Dlg 2</family>
+        <family>Segoe UI</family>
         <pointsize>20</pointsize>
        </font>
       </property>
@@ -465,8 +459,7 @@ entering the ad. Such as administrative rent,
    </property>
    <property name="font">
     <font>
-     <pointsize>30</pointsize>
-     <weight>75</weight>
+     <pointsize>25</pointsize>
      <bold>true</bold>
     </font>
    </property>
@@ -492,7 +485,7 @@ entering the ad. Such as administrative rent,
       <x>22</x>
       <y>0</y>
       <width>191</width>
-      <height>101</height>
+      <height>109</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -528,14 +521,13 @@ entering the ad. Such as administrative rent,
     <rect>
      <x>54</x>
      <y>30</y>
-     <width>181</width>
+     <width>191</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>19</pointsize>
-     <weight>75</weight>
+     <pointsize>16</pointsize>
      <bold>true</bold>
     </font>
    </property>
