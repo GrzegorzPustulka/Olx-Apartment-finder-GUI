@@ -36,13 +36,7 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
     olx_buffer_prices = soup.find_all("p", attrs={"data-testid": "ad-price"})
 
     # change prices from ad to friendly number
-    buffer = []
-    for i in olx_buffer_prices:
-        buffer.append(i.text)
-    text_prices = ''
-    for price in buffer:
-        text_prices += price
-    text_prices = text_prices.replace(' ', '').replace(',', '.')
+    text_prices = ''.join(i.text.replace(' ', '').replace(',', '.') for i in olx_buffer_prices)
     olx_prices = [float(x) for x in re.findall(r'\d*\.\d+|\d+', text_prices)]
 
     olx_rent = 0
