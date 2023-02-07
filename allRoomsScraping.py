@@ -15,11 +15,10 @@ class Ads:
 
 
 ads = []
+lock = threading.Lock()
 
 
 def all_rooms_scraping(max_price, min_price, link, our_districts):
-
-    thread_ads = []
     req = requests.get(link)
     soup = BeautifulSoup(req.text, 'lxml')
     ad = soup.select("a.css-rc5s2u")
@@ -63,9 +62,9 @@ def all_rooms_scraping(max_price, min_price, link, our_districts):
 
                     if max_price >= olx_prices[i] >= min_price:
                         ad = Ads(olx_ad[i], olx_prices[i], additional_fees, olx_prices[i] + additional_fees)
-                        thread_ads.append(ad)
+                        with lock:
+                            ads.append(ad)
                     additional_fees = 0.0
-    ads.append(thread_ads)
 
 
 def run_all_rooms(max_price, min_price, link, our_districts):
@@ -80,20 +79,15 @@ def run_all_rooms(max_price, min_price, link, our_districts):
             threads.append(t)
             t.start()
         else:
-            link = link + "?page=" + str(i + 1)
-            t = threading.Thread(target=all_rooms_scraping, args=(max_price, min_price, link, our_districts))
+            t = threading.Thread(target=all_rooms_scraping, args=(max_price, min_price, link + "?page=" + str(i + 1), our_districts))
             threads.append(t)
             t.start()
 
     for thread in threads:
         thread.join()
 
-    final_results = []
-    for ad in ads:
-        final_results.extend(ad)
-
-    df = pd.DataFrame(final_results)
-    df = df.drop_duplicates(subset='link')
+    df = pd.DataFrame(ads)
+    df = df.drop_duplicates()
     df = df.reset_index(drop=True)
     print(df)
     df.to_excel('AllRoom.xlsx')

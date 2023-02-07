@@ -72,7 +72,7 @@ class Window(QWidget):
 
         link = ""
         if self.apartmentRbtn.isChecked():
-            link += "https://www.olx.pl/d/nieruchomosci/mieszkania/krakow/"
+            link += "https://www.olx.pl/d/nieruchomosci/mieszkania/wynajem/krakow/"
         elif self.roomRbtn.isChecked():
             link += "https://www.olx.pl/d/nieruchomosci/stancje-pokoje/krakow/"
         else:
