@@ -93,5 +93,7 @@ def run_all_rooms(max_price, min_price, link, our_districts):
         final_results.extend(ad)
 
     df = pd.DataFrame(final_results)
+    df = df.drop_duplicates(subset='link')
+    df = df.reset_index(drop=True)
     print(df)
     df.to_excel('AllRoom.xlsx')
