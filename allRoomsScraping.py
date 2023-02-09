@@ -48,9 +48,30 @@ def all_rooms_scraping(max_price, min_price, link, our_districts):
                     soup = BeautifulSoup(req.text, 'lxml')
 
                     if "olx.pl" in olx_ad[i]:
-                        description = soup.select('.css-bgzo2k.er34gjf0')[0].text
-                        mo = r"(\d+\s?,?\d+(zł|zl| zł| zl|PLN| PLN|ZŁ|ZL| ZŁ| ZL|koszty | koszty))"
-                        bills = re.findall(mo, description)
+                        try:
+                            description = soup.select('.css-bgzo2k.er34gjf0')[0].text
+                        except IndexError:
+                            continue
+
+                        description = description.lower()
+                        sentences = re.split(r'[.\n+]', description)
+                        description_to_re = ''
+                        unwanted_words = ['kaucj', 'opcjonaln']
+                        flag = True
+
+                        for sentence in sentences:
+                            for unwanted_word in unwanted_words:
+                                if unwanted_word in sentence:
+                                    flag = False
+                                    break
+                            if flag:
+                                description_to_re += sentence
+                            flag = True
+
+                        mo = r"(\d+\s?,?\d+(zł|zl| zł| zl|pln| pln|koszty| koszty|czynsz| czynsz))"
+                        bills = re.findall(mo, description_to_re)
+                        bills = ["".join(x) for x in bills]
+
                         for j in range(len(bills)):
                             bills[j] = ''.join(x for x in bills[j] if x.isdigit())
                         bills[:] = list(set(bills))
