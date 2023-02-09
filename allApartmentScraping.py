@@ -9,6 +9,8 @@ import threading
 @dataclass
 class Ads:
     link: str
+    area: str
+    rooms: str
     price: float
     rent: float
     total: float
@@ -40,6 +42,8 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
     olx_prices = [float(x) for x in re.findall(r'\d*\.\d+|\d+', text_prices)]
 
     olx_rent = 0
+    olx_area = '0'
+    olx_rooms = '0'
     for i, district in enumerate(olx_districts):
         for name in our_districts:
             if name in district.text:
@@ -48,15 +52,21 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
                     soup = BeautifulSoup(req.text, 'lxml')
 
                     if "olx.pl" in olx_ad[i]:
-                        price_rent_buffer = soup.select('li.css-1r0si1e')
-                        for tag in price_rent_buffer:
+                        tags = soup.select('li.css-1r0si1e')
+                        for tag in tags:
                             if "Czynsz" in tag.text:
                                 text_prices = tag.text.replace(' ', '').replace(',', '.')
                                 olx_rent = (int(re.findall(r'\d+', text_prices)[0]))
+                            elif "Powierzchnia" in tag.text:
+                                olx_area = tag.text[14:]
+                            elif "Liczba pokoi: " in tag.text:
+                                olx_rooms = tag.text[14:]
                     else:
                         olx_rent = 0
+                        olx_area = '0'
+                        olx_rooms = '0'
                     if max_price >= olx_prices[i] + olx_rent >= min_price:
-                        ad = Ads(olx_ad[i], olx_prices[i], olx_rent, olx_prices[i] + olx_rent)
+                        ad = Ads(olx_ad[i], olx_area,olx_rooms, olx_prices[i], olx_rent, olx_prices[i] + olx_rent)
                         with lock:
                             ads.append(ad)
 
@@ -73,7 +83,6 @@ def run_all_apartments(max_price, min_price, link, our_districts):
             threads.append(t)
             t.start()
         else:
-            print(link + "?page=" + str(i + 1))
             t = threading.Thread(target=all_apartments_scraping, args=(max_price, min_price, link + "?page=" + str(i + 1), our_districts))
             threads.append(t)
             t.start()

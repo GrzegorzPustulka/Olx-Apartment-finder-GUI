@@ -9,6 +9,8 @@ import pandas as pd
 @dataclass
 class Ads:
     link: str
+    area: float
+    rooms: str
     price: float
     bills: float
     probably: float
