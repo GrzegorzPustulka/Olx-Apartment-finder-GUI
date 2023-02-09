@@ -44,7 +44,7 @@ def new_room_scraping(max_price, min_price, link, our_districts):
             soup = BeautifulSoup(req.text, 'lxml')
             if "olx.pl" in ad:
                 description = soup.select('.css-bgzo2k.er34gjf0')[0].text
-                mo = r"(\d+[-,\s-]*\d*zł|\d+złoty|\d+zł|\d+[-,\s-]*\d* PLN|\d+pln|\d+[-,\s-]*\d* zl)"
+                mo = r"(\d+\s?,?\d+(zł|zl| zł| zl|PLN| PLN|ZŁ|ZL| ZŁ| ZL|koszty | koszty))"
                 bills = re.findall(mo, description)
 
                 for i in range(len(bills)):

@@ -9,8 +9,6 @@ import pandas as pd
 @dataclass
 class Ads:
     link: str
-    area: float
-    rooms: str
     price: float
     bills: float
     probably: float
@@ -51,7 +49,7 @@ def all_rooms_scraping(max_price, min_price, link, our_districts):
 
                     if "olx.pl" in olx_ad[i]:
                         description = soup.select('.css-bgzo2k.er34gjf0')[0].text
-                        mo = r"(\d+[-,\s-]*\d*zł|\d+złoty|\d+zł|\d+[-,\s-]*\d* PLN|\d+pln|\d+[-,\s-]*\d* zl)"
+                        mo = r"(\d+\s?,?\d+(zł|zl| zł| zl|PLN| PLN|ZŁ|ZL| ZŁ| ZL|koszty | koszty))"
                         bills = re.findall(mo, description)
                         for j in range(len(bills)):
                             bills[j] = ''.join(x for x in bills[j] if x.isdigit())
