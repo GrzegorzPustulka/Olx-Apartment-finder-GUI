@@ -4,11 +4,13 @@ from bs4 import BeautifulSoup
 import threading
 import re
 import pandas as pd
+from RoomsFunc import *
 
 
 @dataclass
 class Ads:
     link: str
+    room: str
     price: float
     bills: float
     probably: float
@@ -23,6 +25,7 @@ def all_rooms_scraping(max_price, min_price, link, our_districts):
     soup = BeautifulSoup(req.text, 'lxml')
     ad = soup.select("a.css-rc5s2u")
     olx_ad = []
+
     for name in ad:
         if "otodom" not in name['href']:
             olx_ad.append("https://www.olx.pl" + name['href'])
@@ -39,53 +42,25 @@ def all_rooms_scraping(max_price, min_price, link, our_districts):
     text_prices = ''.join(i.text.replace(' ', '').replace(',', '.') for i in olx_buffer_prices)
     olx_prices = [float(x) for x in re.findall(r'\d*\.\d+|\d+', text_prices)]
 
-    additional_fees = 0.0
     for i, district in enumerate(olx_districts):
         for name in our_districts:
             if name in district.text:
                 if max_price >= olx_prices[i] >= min_price:
                     req = requests.get(olx_ad[i])
                     soup = BeautifulSoup(req.text, 'lxml')
-
                     if "olx.pl" in olx_ad[i]:
-                        try:
-                            description = soup.select('.css-bgzo2k.er34gjf0')[0].text
-                        except IndexError:
-                            continue
-
-                        description = description.lower()
-                        sentences = re.split(r'[.\n+]', description)
-                        description_to_re = ''
-                        unwanted_words = ['kaucj', 'opcjonaln']
-                        flag = True
-
-                        for sentence in sentences:
-                            for unwanted_word in unwanted_words:
-                                if unwanted_word in sentence:
-                                    flag = False
-                                    break
-                            if flag:
-                                description_to_re += sentence
-                            flag = True
-
-                        mo = r"(\d+\s?,?\d+(zł|zl| zł| zl|pln| pln|koszty| koszty|czynsz| czynsz))"
-                        bills = re.findall(mo, description_to_re)
-                        bills = ["".join(x) for x in bills]
-
-                        for j in range(len(bills)):
-                            bills[j] = ''.join(x for x in bills[j] if x.isdigit())
-                        bills[:] = list(set(bills))
-                        bills[:] = [float(x) for x in list(set(bills)) if float(x) < 600]
-                        for bill in bills:
-                            additional_fees += bill
+                        additional_fees = description_olx_scraping(soup)
+                        if additional_fees == -1:
+                            break
+                        else:
+                            type_room = tags_olx_scraping(soup)
                     else:
                         additional_fees = 0.0
-
+                        type_room = '0'
                     if max_price >= olx_prices[i] >= min_price:
-                        ad = Ads(olx_ad[i], olx_prices[i], additional_fees, olx_prices[i] + additional_fees)
+                        ad = Ads(olx_ad[i], type_room, olx_prices[i], additional_fees, olx_prices[i] + additional_fees)
                         with lock:
                             ads.append(ad)
-                    additional_fees = 0.0
 
 
 def run_all_rooms(max_price, min_price, link, our_districts):

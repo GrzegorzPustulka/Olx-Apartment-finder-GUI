@@ -5,11 +5,13 @@ import re
 from emailSender import email_sender
 import pandas as pd
 import time
+from RoomsFunc import *
 
 
 @dataclass
 class Ads:
     link: str
+    room: str
     price: float
     bills: float
     probably: float
@@ -43,22 +45,18 @@ def new_room_scraping(max_price, min_price, link, our_districts):
             req = requests.get(ad)
             soup = BeautifulSoup(req.text, 'lxml')
             if "olx.pl" in ad:
-                description = soup.select('.css-bgzo2k.er34gjf0')[0].text
-                mo = r"(\d+\s?,?\d+(zł|zl| zł| zl|PLN| PLN|ZŁ|ZL| ZŁ| ZL|koszty | koszty))"
-                bills = re.findall(mo, description)
-
-                for i in range(len(bills)):
-                    bills[i] = ''.join(x for x in bills[i] if x.isdigit())
-                bills[:] = list(set(bills))
-                bills[:] = [float(x) for x in list(set(bills)) if float(x) < 600]
-                for bill in bills:
-                    additional_fees += bill
+                additional_fees = description_olx_scraping(soup)
+                if additional_fees == -1:
+                    break
+                else:
+                    type_room = tags_olx_scraping(soup)
             else:
                 additional_fees = 0.0
+                type_room = '0'
 
             if max_price >= price >= min_price and ad != previous_ad:
                 previous_ad = ad
-                offer = Ads(ad, price, additional_fees, price + additional_fees)
+                offer = Ads(ad, type_room, price, additional_fees, price + additional_fees)
                 ads.append(offer)
                 df = pd.DataFrame(ads)
                 print(df)
