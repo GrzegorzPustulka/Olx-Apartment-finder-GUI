@@ -2,7 +2,6 @@ from dataclasses import dataclass
 import requests
 from bs4 import BeautifulSoup
 import threading
-import re
 import pandas as pd
 from RoomsFunc import *
 
@@ -24,13 +23,8 @@ def all_rooms_scraping(max_price, min_price, link, our_districts):
     req = requests.get(link)
     soup = BeautifulSoup(req.text, 'lxml')
     ad = soup.select("a.css-rc5s2u")
-    olx_ad = []
 
-    for name in ad:
-        if "otodom" not in name['href']:
-            olx_ad.append("https://www.olx.pl" + name['href'])
-        else:
-            olx_ad.append(name['href'])
+    olx_ad = olx_or_otodom(ad)
 
     # ad districts from olx 0-51
     olx_districts = soup.find_all("p", attrs={"data-testid": "location-date"})

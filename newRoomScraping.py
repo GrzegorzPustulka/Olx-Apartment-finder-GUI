@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 import requests
 from bs4 import BeautifulSoup
-import re
 from emailSender import email_sender
 import pandas as pd
 import time
@@ -40,7 +39,6 @@ def new_room_scraping(max_price, min_price, link, our_districts):
         price = soup.find_all("p", attrs={"data-testid": "ad-price"})[3].text.replace(' ', '').replace(',', '.').replace(',', '.').replace('zł', '')
         price = float(price)
 
-        additional_fees = 0.0
         if district in our_districts and max_price >= price >= min_price:
             req = requests.get(ad)
             soup = BeautifulSoup(req.text, 'lxml')

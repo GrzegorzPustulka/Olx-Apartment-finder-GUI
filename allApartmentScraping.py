@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import re
 import pandas as pd
 import threading
+from ApartmentFunc import *
 
 
 @dataclass
@@ -24,12 +25,8 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
     req = requests.get(link)
     soup = BeautifulSoup(req.text, 'lxml')
     ad = soup.select("a.css-rc5s2u")
-    olx_ad = []
-    for name in ad:
-        if "otodom" not in name['href']:
-            olx_ad.append("https://www.olx.pl" + name['href'])
-        else:
-            olx_ad.append(name['href'])
+
+    olx_ad = olx_or_otodom(ad)
 
     # ad districts from olx 0-51
     olx_districts = soup.find_all("p", attrs={"data-testid": "location-date"})
@@ -52,21 +49,14 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
                     soup = BeautifulSoup(req.text, 'lxml')
 
                     if "olx.pl" in olx_ad[i]:
-                        tags = soup.select('li.css-1r0si1e')
-                        for tag in tags:
-                            if "Czynsz" in tag.text:
-                                text_prices = tag.text.replace(' ', '').replace(',', '.')
-                                olx_rent = (int(re.findall(r'\d+', text_prices)[0]))
-                            elif "Powierzchnia" in tag.text:
-                                olx_area = tag.text[14:]
-                            elif "Liczba pokoi: " in tag.text:
-                                olx_rooms = tag.text[14:]
-                    else:
-                        olx_rent = 0
-                        olx_area = '0'
-                        olx_rooms = '0'
+                        if "olx.pl" in ad:
+                            olx_rent, olx_area, olx_rooms = tags_olx_scraping(soup)
+                        else:
+                            olx_rent = 0
+                            olx_area = '?'
+                            olx_rooms = '?'
                     if max_price >= olx_prices[i] + olx_rent >= min_price:
-                        ad = Ads(olx_ad[i], olx_area,olx_rooms, olx_prices[i], olx_rent, olx_prices[i] + olx_rent)
+                        ad = Ads(olx_ad[i], olx_area, olx_rooms, olx_prices[i], olx_rent, olx_prices[i] + olx_rent)
                         with lock:
                             ads.append(ad)
 

@@ -10,7 +10,7 @@ def description_olx_scraping(soup):
     description = description.lower()
     sentences = re.split(r'[.\n+]', description)
     description_to_re = ''
-    unwanted_words = ['kaucj', 'opcjonaln']
+    unwanted_words = ['kaucj', 'opcjonaln', 'gara']
     flag = True
     for sentence in sentences:
         for unwanted_word in unwanted_words:
@@ -40,3 +40,13 @@ def tags_olx_scraping(soup):
             return tag.text[15:]
 
     return "unknown"
+
+
+def olx_or_otodom(ad):
+    olx_ad = []
+    for name in ad:
+        if "otodom" not in name['href']:
+            olx_ad.append("https://www.olx.pl" + name['href'])
+        else:
+            olx_ad.append(name['href'])
+    return olx_ad
