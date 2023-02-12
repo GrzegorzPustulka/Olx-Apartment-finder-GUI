@@ -46,8 +46,8 @@ def new_apartments_scraping(max_price, min_price, link, our_districts):
             if "olx.pl" in ad:
                 olx_rent, olx_area, olx_rooms = tags_olx_scraping(soup)
             else:
-                olx_rent = 0
-                olx_area = '?'
+                olx_rent = rent_otodom_scraping(soup)
+                olx_area = area_otodom_scraping(soup)
                 olx_rooms = '?'
 
             if max_price >= price + olx_rent >= min_price and ad != previous_ad:

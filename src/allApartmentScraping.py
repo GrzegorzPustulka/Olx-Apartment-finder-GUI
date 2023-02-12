@@ -38,9 +38,6 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
     text_prices = ''.join(i.text.replace(' ', '').replace(',', '.') for i in olx_buffer_prices)
     olx_prices = [float(x) for x in re.findall(r'\d*\.\d+|\d+', text_prices)]
 
-    olx_rent = 0
-    olx_area = '0'
-    olx_rooms = '0'
     for i, district in enumerate(olx_districts):
         for name in our_districts:
             if name in district.text:
@@ -51,8 +48,8 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
                     if "olx.pl" in olx_ad[i]:
                         olx_rent, olx_area, olx_rooms = tags_olx_scraping(soup)
                     else:
-                        olx_rent = 0
-                        olx_area = '?'
+                        olx_rent = rent_otodom_scraping(soup)
+                        olx_area = area_otodom_scraping(soup)
                         olx_rooms = '?'
                     if max_price >= olx_prices[i] + olx_rent >= min_price:
                         ad = Ads(olx_ad[i], olx_area, olx_rooms, olx_prices[i], olx_rent, olx_prices[i] + olx_rent)

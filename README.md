@@ -57,6 +57,7 @@ If so, it saves this announcement to an Excel file, but also sends this announce
 - <b> smtplib </b>: Automatic sending of e-mails
 - <b> dataclass </b>: Data storage
 - <b> pandas </b> Saving data in dataframe and saving it to excel
+- <b> pillow </b> gets the size of the photo to set the size of the window in which map of districts is displayed
 
 ## Screens shots
 

@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import QApplication, QWidget, \
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QFont
 import sys
+from PIL import Image
 
 
 def exit_application() -> None:
@@ -179,13 +180,19 @@ class Window(QWidget):
                 self.district_list.addItem(district)
 
     def open_map_image(self) -> None:
-        self.image_map = QDialog(self)
-        self.image_map.setFixedSize(800, 513)
-        self.image_map.setWindowTitle("Map of Krakow districts")
-        label = QLabel(self.image_map)
-        pixmap = QPixmap('images/directs.jpg')
-        label.setPixmap(pixmap)
-        self.image_map.exec()
+        if self.selected_city is not None:
+            path = "../images/"+self.selected_city + ".png"
+            img = Image.open(path)
+            width, height = img.size
+            self.image_map = QDialog(self)
+            self.image_map.setFixedSize(width, height)
+            self.image_map.setWindowTitle("Map of districts")
+            label = QLabel(self.image_map)
+            pixmap = QPixmap(path)
+            label.setPixmap(pixmap)
+            self.image_map.exec()
+        else:
+            QMessageBox.information(self, "Info", "You have not selected any city")
 
     def search_apartments(self) -> None:
         self.selected_districts = [item.text() for item in self.district_list.selectedItems()]
