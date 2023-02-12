@@ -34,6 +34,20 @@ If so, it saves this announcement to an Excel file, but also sends this announce
 
 - <b>Apartments, new offers</b>: same as above :)
 
+## Supported cities
+
+- Kraków
+- Warszawa
+- Wrocław
+- Poznań
+- Łódź
+- Gdańsk
+- Białystok
+- Sopot
+- Katowice
+- Gdynia
+- Gliwice
+
 ## Libraries
 
 - <b> PyQt6 </b>: GUI

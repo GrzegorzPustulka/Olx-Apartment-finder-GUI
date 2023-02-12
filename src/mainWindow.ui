@@ -30,135 +30,6 @@
 background-color: #1e81b0;
 }</string>
   </property>
-  <widget class="QListWidget" name="districtsList">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>70</y>
-     <width>191</width>
-     <height>431</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <bold>false</bold>
-    </font>
-   </property>
-   <property name="selectionMode">
-    <enum>QAbstractItemView::MultiSelection</enum>
-   </property>
-   <property name="flow">
-    <enum>QListView::TopToBottom</enum>
-   </property>
-   <property name="isWrapping" stdset="0">
-    <bool>false</bool>
-   </property>
-   <property name="resizeMode">
-    <enum>QListView::Fixed</enum>
-   </property>
-   <property name="layoutMode">
-    <enum>QListView::SinglePass</enum>
-   </property>
-   <property name="currentRow">
-    <number>-1</number>
-   </property>
-   <item>
-    <property name="text">
-     <string>All</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Bieńczyce</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Bieżanów-Prokocim</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Bronowice</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Czyżyny</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Dębniki</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Grzegórzki</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Krowodrza</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Łagiewniki-Borek Fałęcki</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Mistrzejowice</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Nowa Huta</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Podgórze</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Podgórze Duchackie</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Prądnik Biały</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Prądnik Czerwony</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Stare Miasto</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Swoszowice</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Wzgórza Krzesławickie</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Zwierzyniec</string>
-    </property>
-   </item>
-  </widget>
   <widget class="QPushButton" name="mapBtn">
    <property name="geometry">
     <rect>
@@ -178,104 +49,11 @@ background-color: #1e81b0;
     <string>Map of Krakow districts</string>
    </property>
   </widget>
-  <widget class="QGroupBox" name="kindLayout">
-   <property name="geometry">
-    <rect>
-     <x>460</x>
-     <y>120</y>
-     <width>221</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string/>
-   </property>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>0</y>
-      <width>181</width>
-      <height>109</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QRadioButton" name="apartmentRbtn">
-       <property name="font">
-        <font>
-         <pointsize>20</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>apartment</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="roomRbtn">
-       <property name="font">
-        <font>
-         <pointsize>20</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>room</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QLabel" name="searchLabel">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>150</y>
-     <width>121</width>
-     <height>42</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>25</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Search: </string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="descriptionLabel">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>-20</y>
-     <width>461</width>
-     <height>151</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Arial</family>
-     <pointsize>15</pointsize>
-     <italic>false</italic>
-     <bold>true</bold>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="text">
-    <string>Dishonest owners only give the price of the
-rent, and the rest of the costs only after
-entering the ad. Such as administrative rent,
- utilities, etc. This is the solution</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>350</y>
+     <x>270</x>
+     <y>170</y>
      <width>401</width>
      <height>116</height>
     </rect>
@@ -448,95 +226,103 @@ entering the ad. Such as administrative rent,
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="searchLabel_2">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>260</y>
-     <width>121</width>
-     <height>42</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>25</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Search: </string>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="kindLayout_2">
-   <property name="geometry">
-    <rect>
-     <x>460</x>
-     <y>240</y>
-     <width>221</width>
-     <height>101</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string/>
-   </property>
-   <widget class="QWidget" name="layoutWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>22</x>
-      <y>0</y>
-      <width>191</width>
-      <height>109</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
-     <item>
-      <widget class="QRadioButton" name="allOffersRbtn">
-       <property name="font">
-        <font>
-         <pointsize>20</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>all offers</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="newOffersRbtn">
-       <property name="font">
-        <font>
-         <pointsize>20</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>new offers</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QLabel" name="textDistrictsLabel">
-   <property name="geometry">
-    <rect>
-     <x>54</x>
+     <x>270</x>
      <y>30</y>
-     <width>191</width>
-     <height>31</height>
+     <width>481</width>
+     <height>121</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <pointsize>16</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string>SELECT DISTRICTS</string>
-   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="kindLayout">
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>0</y>
+         <width>181</width>
+         <height>109</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QRadioButton" name="apartmentRbtn">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>apartment</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="roomRbtn">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>room</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="kindLayout_2">
+      <property name="title">
+       <string/>
+      </property>
+      <widget class="QWidget" name="layoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>22</x>
+         <y>0</y>
+         <width>191</width>
+         <height>109</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QRadioButton" name="allOffersRbtn">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>all offers</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="newOffersRbtn">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>new offers</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

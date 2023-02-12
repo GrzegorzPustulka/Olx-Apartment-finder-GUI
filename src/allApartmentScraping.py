@@ -49,12 +49,11 @@ def all_apartments_scraping(max_price, min_price, link, our_districts):
                     soup = BeautifulSoup(req.text, 'lxml')
 
                     if "olx.pl" in olx_ad[i]:
-                        if "olx.pl" in ad:
-                            olx_rent, olx_area, olx_rooms = tags_olx_scraping(soup)
-                        else:
-                            olx_rent = 0
-                            olx_area = '?'
-                            olx_rooms = '?'
+                        olx_rent, olx_area, olx_rooms = tags_olx_scraping(soup)
+                    else:
+                        olx_rent = 0
+                        olx_area = '?'
+                        olx_rooms = '?'
                     if max_price >= olx_prices[i] + olx_rent >= min_price:
                         ad = Ads(olx_ad[i], olx_area, olx_rooms, olx_prices[i], olx_rent, olx_prices[i] + olx_rent)
                         with lock:
