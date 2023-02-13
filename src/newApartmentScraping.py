@@ -2,7 +2,6 @@ from dataclasses import dataclass
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import re
 from emailSender import email_sender
 import time
 from ApartmentFunc import *
@@ -21,8 +20,9 @@ class Ads:
 def new_apartments_scraping(max_price, min_price, link, our_districts):
     previous_ad = ''
     ads = []
-    email = input('Enter email: ')
-    password = input('Enter password: ')
+    sender = '**********'
+    email_password = '**********'
+    receiver = '**********'
     while True:
         req = requests.get(link)
         soup = BeautifulSoup(req.text, 'lxml')
@@ -57,7 +57,7 @@ def new_apartments_scraping(max_price, min_price, link, our_districts):
                 df = pd.DataFrame(ads)
                 print(df)
                 df.to_excel('newApartments.xlsx')
-                email_sender(offer, email, password)
+                email_sender(str(offer), sender, email_password, receiver)
 
         time.sleep(30)
 

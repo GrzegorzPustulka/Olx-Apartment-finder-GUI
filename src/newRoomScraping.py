@@ -19,8 +19,9 @@ class Ads:
 def new_room_scraping(max_price, min_price, link, our_districts):
     previous_ad = ''
     ads = []
-    email = input('Enter email: ')
-    password = input('Enter password: ')
+    sender = '**********'
+    email_password = '**********'
+    receiver = '**********'
     while True:
         req = requests.get(link)
         soup = BeautifulSoup(req.text, 'lxml')
@@ -59,7 +60,7 @@ def new_room_scraping(max_price, min_price, link, our_districts):
                 df = pd.DataFrame(ads)
                 print(df)
                 df.to_excel('newRooms.xlsx')
-                email_sender(ad, email, password)
+                email_sender(str(offer), sender, email_password, receiver)
 
         time.sleep(30)
 
