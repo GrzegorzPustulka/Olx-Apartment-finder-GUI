@@ -54,7 +54,7 @@ If so, it saves this announcement to an Excel file, but also sends this announce
 - <b> bs4 </b>: For scrapping Olx
 - <b> threading </b>: With this library I could browse every page asynchronously, so if there were 30 pages to browse, I speed up the program almost 30 times
 - <b> re </b>: Searching for additional costs in descriptions
-- <b> smtplib </b>: Automatic sending of e-mails
+- <b> smtplib, EmailMessage, ssl </b>: Automatic sending of e-mails
 - <b> dataclass </b>: Data storage
 - <b> pandas </b> Saving data in dataframe and saving it to excel
 - <b> pillow </b> gets the size of the photo to set the size of the window in which map of districts is displayed
