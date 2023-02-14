@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c160710a-35f1-4bfd-8c5e-a976c0b251d4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emailSender.py" beforeDir="false" afterPath="$PROJECT_DIR$/emailSender.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentFunc.py" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentFunc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RoomsFunc.py" beforeDir="false" afterPath="$PROJECT_DIR$/RoomsFunc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/allApartmentScraping.py" beforeDir="false" afterPath="$PROJECT_DIR$/allApartmentScraping.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/allRoomsScraping.py" beforeDir="false" afterPath="$PROJECT_DIR$/allRoomsScraping.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainWindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/mainWindow.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newApartmentScraping.py" beforeDir="false" afterPath="$PROJECT_DIR$/newApartmentScraping.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newRoomScraping.py" beforeDir="false" afterPath="$PROJECT_DIR$/newRoomScraping.py" afterDir="false" />
     </list>

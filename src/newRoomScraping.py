@@ -13,15 +13,16 @@ class Ads:
     room: str
     price: float
     bills: float
-    probably: float
+    total: float
 
 
-def new_room_scraping(max_price, min_price, link, our_districts):
+def new_room_scraping(max_price, min_price, link, our_districts, room, receiver):
     previous_ad = ''
     ads = []
-    sender = '**********'
-    email_password = '**********'
-    receiver = '**********'
+
+    sender = '****'
+    email_password = '****'
+
     while True:
         req = requests.get(link)
         soup = BeautifulSoup(req.text, 'lxml')
@@ -51,9 +52,9 @@ def new_room_scraping(max_price, min_price, link, our_districts):
                     type_room = tags_olx_scraping(soup)
             else:
                 additional_fees = 0.0
-                type_room = '0'
+                type_room = tags_olx_scraping(soup)
 
-            if max_price >= price >= min_price and ad != previous_ad:
+            if max_price >= price >= min_price and ad != previous_ad and (type_room == 'unknown' or type_room == room):
                 previous_ad = ad
                 offer = Ads(ad, type_room, price, additional_fees, price + additional_fees)
                 ads.append(offer)

@@ -17,12 +17,11 @@ class Ads:
     total: float
 
 
-def new_apartments_scraping(max_price, min_price, link, our_districts):
+def new_apartments_scraping(max_price, min_price, link, our_districts, min_area, rooms, receiver):
     previous_ad = ''
     ads = []
-    sender = '**********'
-    email_password = '**********'
-    receiver = '**********'
+    sender = '****'
+    email_password = '****'
     while True:
         req = requests.get(link)
         soup = BeautifulSoup(req.text, 'lxml')
@@ -48,9 +47,11 @@ def new_apartments_scraping(max_price, min_price, link, our_districts):
             else:
                 olx_rent = rent_otodom_scraping(soup)
                 olx_area = area_otodom_scraping(soup)
-                olx_rooms = '?'
+                olx_rooms = rooms_otodom_scraping(soup)
 
-            if max_price >= price + olx_rent >= min_price and ad != previous_ad:
+            if max_price >= price + olx_rent >= min_price and ad != previous_ad and \
+                (olx_area == 'unknown' or float(olx_area[:-3]) >= min_area) and \
+                (olx_rooms == 'unknown' or olx_rooms == rooms):
                 previous_ad = ad
                 offer = Ads(ad, olx_area, olx_rooms, price, olx_rent, price + olx_rent)
                 ads.append(offer)

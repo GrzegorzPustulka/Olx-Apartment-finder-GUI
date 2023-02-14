@@ -42,6 +42,31 @@ def tags_olx_scraping(soup):
     return "unknown"
 
 
+def room_otodom_scraping(soup):
+    tags = soup.find_all('script')
+    match = (r'"Liczba osób w pokoju","localizedValue":"(\D+)","currency"')
+    if len(re.findall(match, tags[-1].text)) == 0:
+        olx_room = 'unknown'
+    else:
+        olx_room = re.findall(match, tags[-1].text)[0].capitalize()
+        if olx_room != 'Jednoosobowy' or olx_room != 'Dwuosobowy':
+            olx_room = 'Trzyosobowy i więcej'
+
+    return olx_room
+
+
+def rent_otodom_scraping(soup):
+    tags = soup.find_all('script')
+    match = (r'"key":"rent","value":"(\d+)"')
+
+    if len(re.findall(match, tags[-1].text)) == 0:
+        rent = 0
+    else:
+        rent = int(re.findall(match, tags[-1].text)[0])
+
+    return rent
+
+
 def olx_or_otodom(ad):
     olx_ad = []
     for name in ad:

@@ -13,6 +13,15 @@ def exit_application() -> None:
 class Window(QWidget):
     def __init__(self):
         super().__init__()
+        self.filtersLayout = None
+        self.roomLabel = None
+        self.roomComboBox = None
+        self.emailInput = None
+        self.emailLabel = None
+        self.roomsLabel = None
+        self.roomsComboBox = None
+        self.minAreaInput = None
+        self.minAreaLabel = None
         self.selected_city = None
         self.districts = None
         self.district_list = None
@@ -39,6 +48,20 @@ class Window(QWidget):
         self.mapBtn.clicked.connect(self.open_map_image)
         self.exitBtn.clicked.connect(exit_application)
         self.searchBtn.clicked.connect(self.search_apartments)
+
+        self.minAreaLabel.hide()
+        self.minAreaInput.hide()
+        self.roomsComboBox.hide()
+        self.roomsLabel.hide()
+        self.emailLabel.hide()
+        self.emailInput.hide()
+        self.roomComboBox.hide()
+        self.roomLabel.hide()
+
+        self.apartmentRbtn.toggled.connect(self.flat_radio_btn_toggled)
+        self.roomRbtn.toggled.connect(self.flat_radio_btn_toggled)
+        self.allOffersRbtn.toggled.connect(self.type_radio_btn_toggled)
+        self.newOffersRbtn.toggled.connect(self.type_radio_btn_toggled)
 
         self.city_combo_box = QComboBox(self)
         self.city_combo_box.setFixedHeight(30)
@@ -75,7 +98,31 @@ class Window(QWidget):
                 if self.city_combo_box.itemText(i) != "SELECT CITY":
                     self.city_combo_box.setCurrentIndex(i)
                     break
-                    
+
+    def flat_radio_btn_toggled(self):
+        if self.apartmentRbtn.isChecked():
+            self.minAreaLabel.show()
+            self.minAreaInput.show()
+            self.roomsComboBox.show()
+            self.roomsLabel.show()
+            self.roomComboBox.hide()
+            self.roomLabel.hide()
+        else:
+            self.minAreaLabel.hide()
+            self.minAreaInput.hide()
+            self.roomsComboBox.hide()
+            self.roomsLabel.hide()
+            self.roomComboBox.show()
+            self.roomLabel.show()
+
+    def type_radio_btn_toggled(self):
+        if self.newOffersRbtn.isChecked():
+            self.emailInput.show()
+            self.emailLabel.show()
+        else:
+            self.emailInput.hide()
+            self.emailLabel.hide()
+
     def update_district_list(self, index):
         self.district_list.setVisible(True)
         city = self.city_combo_box.currentText()
@@ -156,7 +203,7 @@ class Window(QWidget):
                               "Dojlidy Górne", "Dziesięciny I", "Dziesięciny II", "Jaroszówka", "Kawaleryjskie",
                               "Leśna Dolina", "Mickiewicza", "Młodych", "Nowe Miasto", "Piaski", "Piasta I", "Piasta II",
                               "Przydworcowe", "Sienkiewicza", "Skorupy", "Słoneczny Stok", "Starosielce", "Wygoda",
-                            "Wysoki Stoczek", "Zawady", "Zielone Wzgórza"]
+                              "Wysoki Stoczek", "Zawady", "Zielone Wzgórza"]
             for district in self.districts:
                 self.district_list.addItem(district)
         elif city == "Gliwice":
@@ -200,7 +247,8 @@ class Window(QWidget):
         if len(self.selected_districts) == 0:
             QMessageBox.information(self, "Error", "You have not selected any district")
 
-        self.districts.remove("All")
+        if "All" in self.districts:
+            self.districts.remove("All")
 
         for district in self.selected_districts:
             if district == "All":
@@ -226,25 +274,42 @@ class Window(QWidget):
         else:
             QMessageBox.information(self, "Error", "You have not chosen whether you want to\n"
                                                    "look for a room or an apartment")
+        # area = None
+        # if self.apartmentRbtn.isChecked() and self.allOffersRbtn.isChecked():
+        #     try:
+        #         area = int(self.minAreaInput.text())
+        #     except ValueError:
+        #         QMessageBox.information(self, "Error", "You entered the wrong min area.\nIt must be a integer")
+        #
+        # email = 'x'
+        # if self.apartmentRbtn.isChecked() and self.newOffersRbtn.isChecked():
+        #     if len(self.emailInput.text()) > 1:
+        #         email = self.emailInput.text()
+        #     else:
+        #         email = ''
+        #         QMessageBox.information(self, "Error", "You not entered the email.")
+        # self.emailInput.text()
+        # int(self.minAreaInput.text())
+        # rooms = self.roomsComboBox.currentText()
 
         if len(self.selected_districts) > 0 and isinstance(min_price, int) and \
                 isinstance(min_price, int) and len(link) > 0:
             if self.allOffersRbtn.isChecked() and self.apartmentRbtn.isChecked():
                 window.close()
                 from allApartmentScraping import run_all_apartments
-                run_all_apartments(max_price, min_price, link, self.selected_districts)
+                run_all_apartments(max_price, min_price, link, self.selected_districts, int(self.minAreaInput.text()), self.roomsComboBox.currentText())
             elif self.allOffersRbtn.isChecked() and self.roomRbtn.isChecked():
                 window.close()
                 from allRoomsScraping import run_all_rooms
-                run_all_rooms(max_price, min_price, link, self.selected_districts)
+                run_all_rooms(max_price, min_price, link, self.selected_districts, self.roomComboBox.currentText())
             elif self.newOffersRbtn.isChecked() and self.apartmentRbtn.isChecked():
                 window.close()
                 from newApartmentScraping import new_apartments_scraping
-                new_apartments_scraping(max_price, min_price, link, self.selected_districts)
+                new_apartments_scraping(max_price, min_price, link, self.selected_districts, int(self.minAreaInput.text()), self.roomsComboBox.currentText(), self.emailInput.text())
             elif self.newOffersRbtn.isChecked() and self.roomRbtn.isChecked():
                 window.close()
                 from newRoomScraping import new_room_scraping
-                new_room_scraping(max_price, min_price, link, self.selected_districts)
+                new_room_scraping(max_price, min_price, link, self.selected_districts, self.roomComboBox.currentText(), self.emailInput.text())
             else:
                 QMessageBox.information(self, "Error", "You have not chosen whether you want to\n"
                                                        "look for new or all ad")

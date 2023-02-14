@@ -14,7 +14,7 @@ def tags_olx_scraping(soup):
             olx_area = tag.text[14:]
         elif "Liczba pokoi: " in tag.text:
             olx_rooms = tag.text[14:]
-    return olx_rent, olx_area, olx_rooms
+    return olx_rent, olx_area.replace(",", "."), olx_rooms
 
 
 def rent_otodom_scraping(soup):
@@ -38,7 +38,26 @@ def area_otodom_scraping(soup):
     else:
         olx_area = re.findall(match, tags[-1].text)[0] + " m²"
 
-    return olx_area
+    return olx_area.replace(",", ".")
+
+
+def rooms_otodom_scraping(soup):
+    tags = soup.find_all('script')
+    match = (r'"key":"rooms_num","value":"(\d+)"')
+    if len(re.findall(match, tags[-1].text)) == 0:
+        olx_rooms = 'unknown'
+    else:
+        olx_rooms = int(re.findall(match, tags[-1].text)[0])
+        if olx_rooms == 1:
+            olx_rooms = 'Kawalerka'
+        elif olx_rooms == 2:
+            olx_rooms = '2 pokoje'
+        elif olx_rooms == 3:
+            olx_rooms = '3 pokoje'
+        else:
+            olx_rooms = '4 i więcej'
+
+    return olx_rooms
 
 
 def olx_or_otodom(ad):
@@ -49,4 +68,3 @@ def olx_or_otodom(ad):
         else:
             olx_ad.append(name['href'])
     return olx_ad
-
