@@ -63,7 +63,23 @@ If so, it saves this announcement to an Excel file, but also sends this announce
 
 <img
   src="/pictures/menu.png"
-  alt="bet"
+  alt="menu"
+  title="menu"
+  width="500"
+  height="375"
+  style="display: inline-block; margin: 0 auto">
+
+<img
+  src="/pictures/menu1.png"
+  alt="menu"
+  title="menu"
+  width="500"
+  height="375"
+  style="display: inline-block; margin: 0 auto">
+
+<img
+  src="/pictures/menu2.png"
+  alt="menu"
   title="menu"
   width="500"
   height="375"
