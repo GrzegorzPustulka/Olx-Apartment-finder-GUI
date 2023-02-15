@@ -11,6 +11,7 @@ from ApartmentFunc import *
 class Ads:
     link: str
     area: str
+    district: str
     rooms: str
     price: float
     rent: float
@@ -20,8 +21,8 @@ class Ads:
 def new_apartments_scraping(max_price, min_price, link, our_districts, min_area, rooms, receiver):
     previous_ad = ''
     ads = []
-    sender = '****'
-    email_password = '****'
+    sender = '*****'
+    email_password = '*****'
     while True:
         req = requests.get(link)
         soup = BeautifulSoup(req.text, 'lxml')
@@ -53,7 +54,7 @@ def new_apartments_scraping(max_price, min_price, link, our_districts, min_area,
                 (olx_area == 'unknown' or float(olx_area[:-3]) >= min_area) and \
                 (olx_rooms == 'unknown' or olx_rooms == rooms):
                 previous_ad = ad
-                offer = Ads(ad, olx_area, olx_rooms, price, olx_rent, price + olx_rent)
+                offer = Ads(ad, olx_area, district, olx_rooms, price, olx_rent, price + olx_rent)
                 ads.append(offer)
                 df = pd.DataFrame(ads)
                 print(df)

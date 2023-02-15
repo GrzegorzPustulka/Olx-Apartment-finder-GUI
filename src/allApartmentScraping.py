@@ -11,6 +11,7 @@ from ApartmentFunc import *
 class Ads:
     link: str
     area: str
+    district: str
     rooms: str
     price: float
     rent: float
@@ -54,7 +55,7 @@ def all_apartments_scraping(max_price, min_price, link, our_districts, min_area,
                     if max_price >= olx_prices[i] + olx_rent >= min_price and \
                             (olx_area == 'unknown' or float(olx_area[:-3]) >= min_area) and \
                             (olx_rooms == 'unknown' or olx_rooms == rooms):
-                        ad = Ads(olx_ad[i], olx_area, olx_rooms, olx_prices[i], olx_rent, olx_prices[i] + olx_rent)
+                        ad = Ads(olx_ad[i], olx_area, name, olx_rooms, olx_prices[i], olx_rent, olx_prices[i] + olx_rent)
                         with lock:
                             ads.append(ad)
 

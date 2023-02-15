@@ -10,6 +10,7 @@ from RoomsFunc import *
 @dataclass
 class Ads:
     link: str
+    district: str
     room: str
     price: float
     bills: float
@@ -20,8 +21,8 @@ def new_room_scraping(max_price, min_price, link, our_districts, room, receiver)
     previous_ad = ''
     ads = []
 
-    sender = '****'
-    email_password = '****'
+    sender = '*****'
+    email_password = '*****'
 
     while True:
         req = requests.get(link)
@@ -56,7 +57,7 @@ def new_room_scraping(max_price, min_price, link, our_districts, room, receiver)
 
             if max_price >= price >= min_price and ad != previous_ad and (type_room == 'unknown' or type_room == room):
                 previous_ad = ad
-                offer = Ads(ad, type_room, price, additional_fees, price + additional_fees)
+                offer = Ads(ad,district, type_room, price, additional_fees, price + additional_fees)
                 ads.append(offer)
                 df = pd.DataFrame(ads)
                 print(df)

@@ -9,6 +9,7 @@ from RoomsFunc import *
 @dataclass
 class Ads:
     link: str
+    district: str
     room: str
     price: float
     bills: float
@@ -52,7 +53,7 @@ def all_rooms_scraping(max_price, min_price, link, our_districts, room):
                         additional_fees = rent_otodom_scraping(soup)
                         type_room = room_otodom_scraping(soup)
                     if max_price >= olx_prices[i] + additional_fees >= min_price and (type_room == 'unknown' or type_room == room):
-                        ad = Ads(olx_ad[i], type_room, olx_prices[i], additional_fees, olx_prices[i] + additional_fees)
+                        ad = Ads(olx_ad[i], name, type_room, olx_prices[i], additional_fees, olx_prices[i] + additional_fees)
                         with lock:
                             ads.append(ad)
 
