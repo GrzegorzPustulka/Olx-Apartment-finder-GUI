@@ -65,7 +65,7 @@ If so, it saves this announcement to an Excel file, but also sends this announce
   src="/pictures/menu.png"
   alt="menu"
   title="menu"
-  width="500"
+  width="650"
   height="375"
   style="display: inline-block; margin: 0 auto">
 
@@ -73,7 +73,7 @@ If so, it saves this announcement to an Excel file, but also sends this announce
   src="/pictures/menu1.png"
   alt="menu"
   title="menu"
-  width="500"
+  width="650"
   height="375"
   style="display: inline-block; margin: 0 auto">
 
@@ -81,7 +81,7 @@ If so, it saves this announcement to an Excel file, but also sends this announce
   src="/pictures/menu2.png"
   alt="menu"
   title="menu"
-  width="500"
+  width="650"
   height="375"
   style="display: inline-block; margin: 0 auto">
 
@@ -89,7 +89,7 @@ If so, it saves this announcement to an Excel file, but also sends this announce
   src="/pictures/excel.png"
   alt="menu"
   title="menu"
-  width="500"
+  width="650"
   height="375"
   style="display: inline-block; margin: 0 auto">
 
@@ -97,6 +97,6 @@ If so, it saves this announcement to an Excel file, but also sends this announce
   src="/pictures/mail.png"
   alt="menu"
   title="menu"
-  width="500"
+  width="650"
   height="375"
   style="display: inline-block; margin: 0 auto">
