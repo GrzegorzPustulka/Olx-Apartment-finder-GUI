@@ -274,26 +274,25 @@ class Window(QWidget):
         else:
             QMessageBox.information(self, "Error", "You have not chosen whether you want to\n"
                                                    "look for a room or an apartment")
-        # area = None
-        # if self.apartmentRbtn.isChecked() and self.allOffersRbtn.isChecked():
-        #     try:
-        #         area = int(self.minAreaInput.text())
-        #     except ValueError:
-        #         QMessageBox.information(self, "Error", "You entered the wrong min area.\nIt must be a integer")
-        #
-        # email = 'x'
-        # if self.apartmentRbtn.isChecked() and self.newOffersRbtn.isChecked():
-        #     if len(self.emailInput.text()) > 1:
-        #         email = self.emailInput.text()
-        #     else:
-        #         email = ''
-        #         QMessageBox.information(self, "Error", "You not entered the email.")
-        # self.emailInput.text()
-        # int(self.minAreaInput.text())
-        # rooms = self.roomsComboBox.currentText()
+        area = 0
+        if self.apartmentRbtn.isChecked():
+            try:
+                area = int(self.minAreaInput.text())
+            except ValueError:
+                area = None
+                QMessageBox.information(self, "Error", "You entered the wrong min area.\nIt must be a integer")
+
+        email = ''
+        if self.newOffersRbtn.isChecked():
+            if len(self.emailInput.text()) > 0:
+                email = self.emailInput.text()
+            else:
+                email = None
+                QMessageBox.information(self, "Error", "You not entered the email.")
 
         if len(self.selected_districts) > 0 and isinstance(min_price, int) and \
-                isinstance(min_price, int) and len(link) > 0:
+                isinstance(min_price, int) and len(link) > 0 and isinstance(area, int) \
+                and (isinstance(email, str)):
             if self.allOffersRbtn.isChecked() and self.apartmentRbtn.isChecked():
                 window.close()
                 from allApartmentScraping import run_all_apartments

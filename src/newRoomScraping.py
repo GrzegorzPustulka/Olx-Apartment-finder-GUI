@@ -21,8 +21,8 @@ def new_room_scraping(max_price, min_price, link, our_districts, room, receiver)
     previous_ad = ''
     ads = []
 
-    sender = '*****'
-    email_password = '*****'
+    sender = 'kontakt.pustulka@gmail.com'
+    email_password = '****'
 
     while True:
         req = requests.get(link)

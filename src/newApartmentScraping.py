@@ -21,8 +21,8 @@ class Ads:
 def new_apartments_scraping(max_price, min_price, link, our_districts, min_area, rooms, receiver):
     previous_ad = ''
     ads = []
-    sender = '*****'
-    email_password = '*****'
+    sender = 'kontakt.pustulka@gmail.com'
+    email_password = '****'
     while True:
         req = requests.get(link)
         soup = BeautifulSoup(req.text, 'lxml')
